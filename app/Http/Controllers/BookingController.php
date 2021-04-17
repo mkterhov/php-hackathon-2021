@@ -37,7 +37,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $programme = Programme::find($request->programme_id);
-        if($programme->bookings()->count()+1<=$programme->capacity) {
+        if($programme->bookings()->count()+1<$programme->capacity) {
             $booking = Booking::create($request->all());
             return response()->json($booking,201);
         }
