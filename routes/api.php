@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Programme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ProgrammeResource;
+use App\Http\Controllers\ProgrammeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('programmes/{programme}', [ProgrammeController::class,'show']);
+Route::get('programmes', [ProgrammeController::class,'index']);
+Route::post('programmes', [ProgrammeController::class,'store']);

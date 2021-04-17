@@ -12,6 +12,8 @@ class Programme extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title','user_id', 'start_time','end_time','room_id'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -24,6 +26,6 @@ class Programme extends Model
 
     public function bookings()
     {
-        return $this->belongsToMany(Booking::class);
+        return $this->hasMany(Booking::class);
     }
 }

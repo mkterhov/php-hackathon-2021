@@ -22,7 +22,7 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'capacity' => $this->faker->numberBetween(20, 100,),
+            'capacity' => $this->faker->numberBetween(20, 100),
         ];
     }
 }

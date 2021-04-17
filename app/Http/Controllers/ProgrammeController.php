@@ -14,7 +14,7 @@ class ProgrammeController extends Controller
      */
     public function index()
     {
-        //
+        return Programme::with(['bookings'])->get();
     }
 
     /**
@@ -35,7 +35,8 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $programme = Programme::create($request->all());
+        return response()->json($programme,201);
     }
 
     /**
@@ -46,7 +47,7 @@ class ProgrammeController extends Controller
      */
     public function show(Programme $programme)
     {
-        //
+        return $programme;
     }
 
     /**

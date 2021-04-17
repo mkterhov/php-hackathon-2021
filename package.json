@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "test-db": "php artisan migrate:fresh --database=test-mysql",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
