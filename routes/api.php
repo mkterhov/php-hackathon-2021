@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('programmes/{programme}', [ProgrammeController::class,'show']);
-Route::delete('programmes/{programme}', [ProgrammeController::class,'delete']);
+Route::delete('programmes/{programme}', [ProgrammeController::class,'destroy']);
 Route::get('programmes', [ProgrammeController::class,'index']);
 Route::post('programmes', [ProgrammeController::class,'store']);
 

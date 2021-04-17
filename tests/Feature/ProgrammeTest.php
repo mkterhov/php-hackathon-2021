@@ -9,13 +9,12 @@ use App\Models\Programme;
 use Faker\Factory as Faker;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ProgrammeTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
     /**
-     * A basic unit test example.
      *
      * @return void
      */
@@ -101,14 +100,25 @@ class ProgrammeTest extends TestCase
 
         Programme::factory()->create([
             'user_id' => 1,
-            'title' => "test title",
+            'title' => "TESTS TESTS TESTS",
             'type_id' => $faker->numberBetween(1, 2),
             'room_id' => 1,
             'capacity'=> 5,
             'start_time' => "2021-04-24 15:45:21",
             'end_time'   => "2021-04-24 17:45:21",
         ]);
-        $response = $this->delete('/api/programmes',["programme_id" => 1]);
-        $response->assert(Programme::all()->count()==0);
+        Programme::factory()->create([
+            'user_id' => 1,
+            'title' => "NEW TEST",
+            'type_id' => $faker->numberBetween(1, 2),
+            'room_id' => 1,
+            'capacity'=> 5,
+            'start_time' => "2021-04-24 15:45:21",
+            'end_time'   => "2021-04-24 17:45:21",
+        ]);
+        $response = $this->delete('/api/programmes/',["programme_id" => 1]);
+        $this->assertDatabaseHas('programmes',[
+            'title' => 'TESTS TESTS TESTS',
+        ]);
     }
 }

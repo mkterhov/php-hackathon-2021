@@ -81,6 +81,9 @@ class ProgrammeController extends Controller
      */
     public function destroy(Programme $programme)
     {
-        //
+        if($programme->delete()) {
+            return response()->json($programme,200);
+        }
+        return response()->json(["Error"=> "Record doesn't exist"]);
     }
 }

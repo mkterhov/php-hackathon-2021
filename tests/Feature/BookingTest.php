@@ -9,12 +9,12 @@ use App\Models\Programme;
 use Faker\Factory as Faker;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class BookingTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use DatabaseMigrations;
     /**
      *
      * @return void
