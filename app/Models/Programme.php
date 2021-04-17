@@ -15,6 +15,7 @@ class Programme extends Model
 
     protected $fillable = ['title','type_id','user_id', 'start_time','end_time','room_id','capacity'];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Programme;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -14,7 +15,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        return Booking::all();
     }
 
     /**
@@ -35,7 +36,12 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $programme = Programme::find($request->programme_id);
+        if($programme->bookings()->count()+1<=$programme->capacity) {
+            $booking = Booking::create($request->all());
+            return response()->json($booking,201);
+        }
+        return response()->json(['Error'=> "Can't save the booking! Programme is Filled" ]);
     }
 
     /**
@@ -46,7 +52,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+
     }
 
     /**

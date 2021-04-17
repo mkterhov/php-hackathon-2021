@@ -1,0 +1,53 @@
+<?php
+
+namespace Tests\Feature;
+use Tests\TestCase;
+use App\Models\Room;
+use App\Models\Type;
+use App\Models\User;
+use App\Models\Programme;
+use Faker\Factory as Faker;
+use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class BookingTest extends TestCase
+{
+
+    use RefreshDatabase;
+    /**
+     *
+     * @return void
+     */
+    /** @test */
+    public function test_save_booking_to_a_programme()
+    {
+        $user = User::factory()->create();
+
+        Room::factory(5)->create();
+
+        Type::factory()->create(['name'=>'pilates']);
+        Type::factory()->create(['name'=>'kangoo jumps']);
+
+        $faker = Faker::create();
+        Programme::factory()->create([
+            'user_id' => 1,
+            'title' => "test title",
+            'type_id' => $faker->numberBetween(1, 2),
+            'room_id' => 2,
+            'capacity'=> 10,
+            'start_time' => "2021-04-24 15:45:21",
+            'end_time'   => "2021-04-24 17:45:21",
+        ]);
+        $data = [
+            'name' => 'JOHN SMITH',
+            'email' => $faker->unique()->safeEmail,
+            'programme_id' => 1,
+            'cnp' => $faker->regexify('[0-9]{13}'),
+        ];
+
+        $response = $this->post('/api/bookings',$data);
+
+        $response->assertStatus(201);
+    }
+}
