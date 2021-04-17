@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Room;
+use App\Models\Type;
 use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class Programme extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','user_id', 'start_time','end_time','room_id'];
+    protected $fillable = ['title','type_id','user_id', 'start_time','end_time','room_id','capacity'];
 
     public function user()
     {
@@ -27,5 +28,10 @@ class Programme extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }

@@ -3,7 +3,6 @@
 use App\Models\Programme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Resources\ProgrammeResource;
 use App\Http\Controllers\ProgrammeController;
 
 /*

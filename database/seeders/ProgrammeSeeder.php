@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Type;
 use App\Models\Programme;
 use Faker\Factory as Faker;
 use Illuminate\Support\Carbon;
@@ -17,7 +18,8 @@ class ProgrammeSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-
+        Type::factory()->create(['name'=>'pilates']);
+        Type::factory()->create(['name'=>'kangoo jumps']);
         foreach (range(1, 15) as $index) {
             $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+1 month')->getTimestamp());
 
@@ -25,7 +27,9 @@ class ProgrammeSeeder extends Seeder
             Programme::factory()->create([
                 'user_id' => $faker->numberBetween(1, 20),
                 'title' => ucwords($faker->words(2, true)),
+                'type_id' => $faker->numberBetween(1, 2),
                 'room_id' => $faker->numberBetween(1, 20),
+                'capacity' => $faker->numberBetween(20, 100),
                 'start_time' => $startDate->toDateTimeString(),
                 'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 3 ) )
             ]);

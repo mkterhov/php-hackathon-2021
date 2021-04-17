@@ -17,6 +17,8 @@ class CreateProgrammesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title');
+            $table->foreignId('type_id')->constrained();
+            $table->integer('capacity');
             $table->timestamp('start_time');
             $table->timestamp('end_time');
             $table->foreignId('room_id')->constrained();

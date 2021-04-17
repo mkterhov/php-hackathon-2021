@@ -2,7 +2,6 @@
 
 use App\Models\Programme;
 use Illuminate\Support\Facades\Route;
-use App\Http\Resources\ProgrammeResource;
 
 /*
 |--------------------------------------------------------------------------
