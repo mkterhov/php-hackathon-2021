@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Programme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -36,12 +37,26 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $programme = Programme::find($request->programme_id);
-        if($programme->bookings()->count()+1<$programme->capacity) {
-            $booking = Booking::create($request->all());
-            return response()->json($booking,201);
+        $validator = Validator::make($request->json()->all(), [
+            'name'=> 'required',
+            'email' => 'required|email',
+            'cnp' => 'required|regex:/^(\d{13})?$/i',
+            'programme_id' => 'required|numeric'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                "errors" => validator->errors()->getMessages()
+            ]);
         }
-        return response()->json(['Error'=> "Can't save the booking! Programme is Filled" ]);
+        $programme = Programme::withCount('bookings')->find($request->programme_id);
+        if($programme->bookings_count+1 < $programme->capacity) {
+            $booking = Booking::create($request->all());
+            return response()->json($booking, 201);
+        }
+        return response()->json([
+            'message'=> "Can't save the booking! Programme is Filled"
+        ]);
     }
 
     /**

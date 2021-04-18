@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Programme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProgrammeController extends Controller
 {
@@ -35,6 +36,16 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->json()->all(), [
+            'title'=> 'required|max:255',
+            'start_time' => 'required|date',
+            'end_time' => 'date|after:start_time',
+            'capacity' => 'required|numeric'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors()->getMessages());
+        }
         $programme = Programme::create($request->all());
         return response()->json($programme,201);
     }
