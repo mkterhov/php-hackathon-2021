@@ -12,8 +12,7 @@ php artisan serve
 
 
 ### Data and Domain model
-DB Strucuture
-(docs/images/db.png)
+(/docs/images/db.png)
 
 
 
@@ -25,8 +24,10 @@ The endpoint for the creation of a booking allows access to register to a progra
 
 ##### Functionalities
 For each of the following functionalities, please tick the box if you implemented it and describe its input and output in your application:
+```
 
 [x] Create programme => POST api/programmes
+
 example: POST http://127.0.0.1:8000/api/programmes 
 body: {
     "api_token":"nMLxcTS0P05ascNfVMv6Mg85KoXrNrD8F8FyK3WUAe4HgdJeBkBCddHw1YzC",
@@ -38,6 +39,7 @@ body: {
     "end_time": "2021-04-18 22:30:00",
     "room_id": 1
 }
+
 [x] Delete programme => DELETE api/programmes/{programme} App\Http\Controllers\ProgrammeController@destroy
 example: POST http://127.0.0.1:8000/api/programmes/1 
 
@@ -51,6 +53,7 @@ body:
     "programme_id": 7,
     "cnp": "6210415018286"
 }
+```
 
 ##### Business rules
 Programme:
