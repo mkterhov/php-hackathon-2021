@@ -20,8 +20,8 @@ class ProgrammeSeeder extends Seeder
         $faker = Faker::create();
         Type::factory()->create(['name'=>'pilates']);
         Type::factory()->create(['name'=>'kangoo jumps']);
-        foreach (range(1, 15) as $index) {
-            $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+2 days')->getTimestamp());
+        foreach (range(1, 10) as $index) {
+            $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+10 hours')->getTimestamp());
 
 
             Programme::factory()->create([
@@ -31,7 +31,7 @@ class ProgrammeSeeder extends Seeder
                 'room_id' => $faker->numberBetween(1, 20),
                 'capacity' => $faker->numberBetween(10, 15),
                 'start_time' => $startDate->toDateTimeString(),
-                'end_time'   => $startDate->addHours( $faker->numberBetween( 5, 10 ) )
+                'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 2 ) )
             ]);
         }
     }
