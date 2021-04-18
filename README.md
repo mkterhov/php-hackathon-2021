@@ -12,7 +12,7 @@ php artisan serve
 
 
 ### Data and Domain model
-(/docs/images/db.png)
+![DB Schema](/docs/images/db.png)
 
 
 
