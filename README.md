@@ -12,10 +12,13 @@ php artisan serve
 
 
 ### Data and Domain model
-![DB structure](docs/images/db.png)
+DB Strucuture
+(docs/images/db.png)
+
+
+
 I used 5 entities. Programme: represent the events,User: for the admins, Booking: the reservations for the events, Room: to keep track of the rooms, and Type: for the type of the events
 ### Application architecture
-D
 ###  Implementation
 In terms of implementation the API allows an to Create a programme, delete a programme, view both a single programme and all of them in a list. 
 The endpoint for the creation of a booking allows access to register to a programme. 
