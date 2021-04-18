@@ -131,7 +131,9 @@ class ProgrammeController extends Controller
      */
     public function destroy(Programme $programme)
     {
-        if($programme->delete()) {
+        if($programme) {
+            $programme->bookings()->delete();
+            $programme->delete();
             return response()->json($programme);
         }
         return response()->json(["Error"=> "Couldn't delete the record"]);

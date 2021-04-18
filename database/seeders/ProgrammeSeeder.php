@@ -31,7 +31,7 @@ class ProgrammeSeeder extends Seeder
                 'room_id' => $faker->numberBetween(1, 5),
                 'capacity' => $faker->numberBetween(10, 15),
                 'start_time' => $startDate->toDateTimeString(),
-                'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 2 ) )
+                'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 3 ) )
             ]);
         }
     }

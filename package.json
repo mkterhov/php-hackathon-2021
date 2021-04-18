@@ -1,7 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "test-db": "php artisan migrate:fresh --database=test-mysql",
+        "start": "php artisan serve",
+        "migrate:db": "php artisan migrate:fresh --seed",
+        "migrate:test-db": "php artisan migrate:fresh --database=test-mysql",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",

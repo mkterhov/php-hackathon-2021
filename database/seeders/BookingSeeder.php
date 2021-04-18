@@ -18,7 +18,7 @@ class BookingSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 15) as $i) {
+        foreach (range(1, 10) as $i) {
             Booking::factory()->create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
