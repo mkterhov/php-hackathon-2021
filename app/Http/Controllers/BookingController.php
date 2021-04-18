@@ -41,7 +41,8 @@ class BookingController extends Controller
         $validator = Validator::make($request->json()->all(), [
             'name'=> 'required|string',
             'email' => 'required|email',
-            'cnp' => 'required|regex:/^(\d{13})?$/i',
+            // 'cnp' => 'required|regex:/^(\d{13})?$/i',
+            'cnp' => ['required','regex:/^[1-8]\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(0[1-9]|[1-4]\d|5[0-2]|99)\d{4}$/'],
             'programme_id' => 'required|numeric'
         ]);
 
@@ -51,8 +52,21 @@ class BookingController extends Controller
             ]);
         }
 
-        $usersOtherBookings = Booking::with('programme')->where('cnp', $request->cnp)->get();
         $programme = Programme::withCount('bookings')->find($request->programme_id);
+        //check if programme exists
+        if(!$programme) {
+            return response()->json([
+                'message' => 'No Programme with the id=' . $request->programme_id . ' found!',
+            ],400);
+        }
+        //check if user is signed up for the programme that the request tries to register
+        $usersOtherBookings = Booking::with('programme')->where('cnp', $request->cnp)->get();
+        if($usersOtherBookings->where('programme_id', $request->programme_id)->count() > 0) {
+            return response()->json([
+                'message'=> "User already has a booking for the event",
+            ]);
+        }
+        //checks wheather there are any programmes that user has that overlap with this one
         $usersProgrammesByTime = DB::table('programmes')
             ->join('bookings',function($join) {
                 $join->on('programmes.id', '=', 'bookings.programme_id');
@@ -62,11 +76,6 @@ class BookingController extends Controller
             ->whereBetween('programmes.start_time',[ $programme->start_time, $programme->end_time])
             ->orWhereBetween('programmes.end_time',[ $programme->start_time, $programme->end_time])
             ->get();
-        if($usersOtherBookings->where('programme_id', $request->programme_id)->count() > 0) {
-            return response()->json([
-                'message'=> "User already has a booking for the event",
-            ]);
-        }
         if($usersProgrammesByTime->isNotEmpty()) {
             error_log('\n'.$usersProgrammesByTime.'\n');
 
@@ -74,12 +83,13 @@ class BookingController extends Controller
                 'message'=> "User is registered for another event at the same time",
             ]);
         }
-
+        //check if the programme has capacity
         if($programme->bookings_count >= $programme->capacity) {
             return response()->json([
                 'message'=> "Can't save the booking! Programme is Filled"
             ]);
         }
+        //register the user
         $booking = Booking::create($request->all());
         return response()->json($booking);
 
