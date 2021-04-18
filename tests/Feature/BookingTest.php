@@ -70,14 +70,30 @@ class BookingTest extends TestCase
             'type_id' => $faker->numberBetween(1, 2),
             'room_id' => 2,
             'capacity'=> 10,
-            'start_time' => "2021-04-24 15:45:21",
-            'end_time'   => "2021-04-24 17:45:21",
+            'start_time' => "2021-04-24 12:45:21",
+            'end_time'   => "2021-04-24 13:45:21",
+        ]);
+        Programme::factory()->create([
+            'user_id' => 1,
+            'title' => "test title",
+            'type_id' => $faker->numberBetween(1, 2),
+            'room_id' => 3,
+            'capacity'=> 10,
+            'start_time' => "2021-04-24 13:45:21",
+            'end_time'   => "2021-04-24 14:45:21",
         ]);
         $data = [
             'name' => 'JOHN SMITH',
             'email' => 'johnsmit@gmail.com',
             'programme_id' => 1,
-            'cnp' => '1234567891234',
+            'cnp' => '6210415018286',
+        ];
+        $response = $this->post('/api/bookings',$data);
+        $data = [
+            'name' => 'JOHN SMITH',
+            'email' => 'johnsmit@gmail.com',
+            'programme_id' => 2,
+            'cnp' => '6210415018286',
         ];
         $response = $this->post('/api/bookings',$data);
         $response->assertStatus(200);

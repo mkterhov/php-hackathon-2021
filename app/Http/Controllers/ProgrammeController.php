@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use App\Models\Programme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +41,7 @@ class ProgrammeController extends Controller
             'title'=> 'required|string|max:255',
             'start_time' => 'required|date',
             'end_time' => 'date|after:start_time',
-            'capacity' => 'required|numeric'
+            'capacity' => 'required|numeric',
         ]);
 
         if($validator->fails()) {
@@ -49,6 +50,26 @@ class ProgrammeController extends Controller
                 'message' => $validator->errors()->first()
             ]);
         }
+        $room = Room::find($request->room_id);
+        //check if room exists
+        if(!$room) {
+            return response()->json([
+                'message' => 'No room with the id=' . $request->room_id . ' found!',
+            ],400);
+        }
+        $programmesByTimeInterval =  Programme::select('*')
+            ->where('room_id','=', $request->room_id)
+            ->whereBetween('start_time',[ $request->start_time, $request->end_time])
+            ->orWhereBetween('end_time',[ $request->start_time, $request->end_time])
+            ->get();
+        if($programmesByTimeInterval->isNotEmpty()) {
+            error_log('\n'.$programmesByTimeInterval.'\n');
+
+            return response()->json([
+                'message'=> "Event already taking place in the same room during the period given!",
+            ]);
+        }
+
         $programme = Programme::create($request->all());
         return response()->json($programme);
     }

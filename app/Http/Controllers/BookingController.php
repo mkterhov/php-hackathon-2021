@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Programme;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -67,7 +66,7 @@ class BookingController extends Controller
             ]);
         }
         //checks wheather there are any programmes that user has that overlap with this one
-        $usersProgrammesByTime = DB::table('programmes')
+        $usersProgrammesByTime = \DB::table('programmes')
             ->join('bookings',function($join) {
                 $join->on('programmes.id', '=', 'bookings.programme_id');
            })
@@ -77,8 +76,6 @@ class BookingController extends Controller
             ->orWhereBetween('programmes.end_time',[ $programme->start_time, $programme->end_time])
             ->get();
         if($usersProgrammesByTime->isNotEmpty()) {
-            error_log('\n'.$usersProgrammesByTime.'\n');
-
             return response()->json([
                 'message'=> "User is registered for another event at the same time",
             ]);

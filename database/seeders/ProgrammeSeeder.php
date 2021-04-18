@@ -25,10 +25,10 @@ class ProgrammeSeeder extends Seeder
 
 
             Programme::factory()->create([
-                'user_id' => $faker->numberBetween(1, 20),
+                'user_id' => $faker->numberBetween(1, 5),
                 'title' => ucwords($faker->words(2, true)),
                 'type_id' => $faker->numberBetween(1, 2),
-                'room_id' => $faker->numberBetween(1, 20),
+                'room_id' => $faker->numberBetween(1, 5),
                 'capacity' => $faker->numberBetween(10, 15),
                 'start_time' => $startDate->toDateTimeString(),
                 'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 2 ) )

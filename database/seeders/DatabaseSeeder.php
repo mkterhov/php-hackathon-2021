@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         Type::factory()->create(['name'=>'pilates']);
         Type::factory()->create(['name'=>'kangoo jumps']);
-        User::factory(20)->create();
-        Room::factory(20)->create();
+        User::factory(5)->create();
+        Room::factory(5)->create();
         $this->call(ProgrammeSeeder::class);
         // $this->call(BookingSeeder::class);
     }
