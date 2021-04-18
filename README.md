@@ -5,10 +5,11 @@ This document has the purpose of summarizing the main functionalities your appli
 
 ## Technical documentation
 ### Run the aplication
+```
 composer install && npm install
 npm run migrate:db 
 php artisan serve
-
+```
 
 
 ### Data and Domain model
@@ -16,7 +17,7 @@ php artisan serve
 
 
 
-I used 5 entities. Programme: represent the events,User: for the admins, Booking: the reservations for the events, Room: to keep track of the rooms, and Type: for the type of the events
+I used 5 entities. **Programme**: represent the events,**User**: for the admins, **Booking**: the reservations for the events, **Room**: to keep track of the rooms, and **Type**: for the type of the events
 ### Application architecture
 ###  Implementation
 In terms of implementation the API allows an to Create a programme, delete a programme, view both a single programme and all of them in a list. 
@@ -39,10 +40,12 @@ body: {
     "end_time": "2021-04-18 22:30:00",
     "room_id": 1
 }
+returns newly created programme
 
-[x] Delete programme => DELETE api/programmes/{programme} App\Http\Controllers\ProgrammeController@destroy
+[x] Delete programme => DELETE api/programmes/{programme}
 example: POST http://127.0.0.1:8000/api/programmes/1 
 
+returns the programme that was deleted
 
 [x] Book a programme => POST api/bookings
 example: POST http://127.0.0.1:8000/api/bookings 
@@ -50,18 +53,19 @@ body:
 {
     "name": "John Smith",
     "email": "johnsmith@email.com",
-    "programme_id": 7,
+    "programme_id": 1,
     "cnp": "6210415018286"
 }
+returns the created booking
+
 ```
 
 ##### Business rules
-Programme:
-    store: check whether api-token is provided and if it is correct, validate the inputs given in the request, check if the room requested exists, check if between the datetimes given for the event the room specified is not occupied and then proceed to creating a new Programme.
-    delete: delete the bookings associated. and then delete the Programme
-Booking: 
-    store: validate the inputs given in the request, check if programme exists, check if user is signed up for the programme that the request tries to register, verify wheather there are any programmes that user has that overlap with current one, check for Programme capacity. If no errors save the new Booking
-
+**Programme**: \
+    *store*: check whether api-token is provided and if it is correct, validate the inputs given in the request, check if the room requested exists, check if between the datetimes given for the event the room specified is not occupied and then proceed to creating a new Programme. \
+    *delete*: delete the bookings associated. and then delete the Programme \
+ **Booking**: \
+    *store*: validate the inputs given in the request, check if programme exists, check if user is signed up for the programme that the request tries to register,      verify wheather there are any programmes that user has that overlap with current one, check for Programme capacity. If no errors save the new Booking\
 
 
 ##### Environment
@@ -80,16 +84,14 @@ Feature Tests using fake data and manual testing with Postman
 In this section, please let us know what is your opinion about this experience and how we can improve it:
 
 1. Have you ever been involved in a similar experience? If so, how was this one different?
-No, I haven't been before
+\No, I haven't been before
 2. Do you think this type of selection process is suitable for you?
 3. What's your opinion about the complexity of the requirements?
 4. What did you enjoy the most?
 5. What was the most challenging part of this anti hackathon?
 6. Do you think the time limit was suitable for the requirements?
-7. Did you find the resources you were sent on your email useful?
-Yes, they were helpful
-8. Is there anything you would like to improve to your current implementation?
-Test it more to check for errors I missed
+7. Did you find the resources you were sent on your email useful?  Yes, they were helpful
+8. Is there anything you would like to improve to your current implementation? Test it a bit more to check for errors I missed
 9. What would you change regarding this anti hackathon?
 
 
