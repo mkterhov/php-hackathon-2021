@@ -22,10 +22,10 @@ class BookingFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $faker->name,
-            'email' => $faker->unique()->safeEmail,
-            'programme_id' => $faker->numberBetween(1, 15),
-            'cnp' => $faker->regexify('[0-9]{13}'),
+            'name' =>$this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'programme_id' => $this->faker->numberBetween(1, 15),
+            'cnp' => $this->faker->regexify('[0-9]{13}'),
         ];
     }
 }

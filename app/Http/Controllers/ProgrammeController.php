@@ -37,17 +37,20 @@ class ProgrammeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
-            'title'=> 'required|max:255',
+            'title'=> 'required|string|max:255',
             'start_time' => 'required|date',
             'end_time' => 'date|after:start_time',
             'capacity' => 'required|numeric'
         ]);
 
         if($validator->fails()) {
-            return response()->json($validator->errors()->getMessages());
+            return response()->json([
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ]);
         }
         $programme = Programme::create($request->all());
-        return response()->json($programme,201);
+        return response()->json($programme);
     }
 
     /**
@@ -93,8 +96,8 @@ class ProgrammeController extends Controller
     public function destroy(Programme $programme)
     {
         if($programme->delete()) {
-            return response()->json($programme,200);
+            return response()->json($programme);
         }
-        return response()->json(["Error"=> "Record doesn't exist"]);
+        return response()->json(["Error"=> "Couldn't delete the record"]);
     }
 }

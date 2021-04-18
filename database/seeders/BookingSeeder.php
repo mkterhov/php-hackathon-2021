@@ -18,14 +18,11 @@ class BookingSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 15) as $index) {
-            $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+1 month')->getTimestamp());
-
-
+        foreach (range(1, 15) as $i) {
             Booking::factory()->create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'programme_id' => $faker->numberBetween(1, 15),
+                'programme_id' =>  $i,
                 'cnp' => $faker->regexify('[0-9]{13}'),
             ]);
         }

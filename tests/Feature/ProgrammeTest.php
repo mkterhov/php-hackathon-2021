@@ -31,8 +31,6 @@ class ProgrammeTest extends TestCase
 
         $faker = Faker::create();
 
-        $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+1 month')->getTimestamp());
-
         $data = [
             'user_id' => 1,
             'title' => "test title",
@@ -44,7 +42,7 @@ class ProgrammeTest extends TestCase
         ];
         $response = $this->post('/api/programmes/',$data);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
 
     }
 

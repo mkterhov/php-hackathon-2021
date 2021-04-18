@@ -21,7 +21,7 @@ class ProgrammeSeeder extends Seeder
         Type::factory()->create(['name'=>'pilates']);
         Type::factory()->create(['name'=>'kangoo jumps']);
         foreach (range(1, 15) as $index) {
-            $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+1 month')->getTimestamp());
+            $startDate = Carbon::createFromTimeStamp($faker->dateTimeBetween('now', '+2 days')->getTimestamp());
 
 
             Programme::factory()->create([
@@ -29,9 +29,9 @@ class ProgrammeSeeder extends Seeder
                 'title' => ucwords($faker->words(2, true)),
                 'type_id' => $faker->numberBetween(1, 2),
                 'room_id' => $faker->numberBetween(1, 20),
-                'capacity' => $faker->numberBetween(20, 100),
+                'capacity' => $faker->numberBetween(10, 15),
                 'start_time' => $startDate->toDateTimeString(),
-                'end_time'   => $startDate->addHours( $faker->numberBetween( 1, 3 ) )
+                'end_time'   => $startDate->addHours( $faker->numberBetween( 5, 10 ) )
             ]);
         }
     }

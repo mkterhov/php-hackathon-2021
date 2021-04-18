@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         User::factory(20)->create();
         Room::factory(20)->create();
         $this->call(ProgrammeSeeder::class);
-        $this->call(BookingSeeder::class);
+        // $this->call(BookingSeeder::class);
     }
 }
