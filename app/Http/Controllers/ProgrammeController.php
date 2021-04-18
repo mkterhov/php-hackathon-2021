@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\User;
 use App\Models\Programme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,20 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
+        //check whether api-token provided and if it is correct
+        if(!$request->api_token) {
+            return response()->json([
+                'message' => "Admin access required"
+            ]);
+        }
+        $user = User::where('api_token',$request->api_token)->get();
+
+        if($user->isEmpty()){
+            return response()->json([
+                'message' => "Provide a valid api-token"
+            ]);
+        }
+        //validate the fields
         $validator = Validator::make($request->json()->all(), [
             'title'=> 'required|string|max:255',
             'start_time' => 'required|date',

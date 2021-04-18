@@ -32,6 +32,7 @@ class ProgrammeTest extends TestCase
         $faker = Faker::create();
 
         $data = [
+            "api_token"=>"nMLxcTS0P05ascNfVMv6Mg85KoXrNrD8F8FyK3WUAe4HgdJeBkBCddHw1YzC",
             'user_id' => 1,
             'title' => "test title",
             'type_id' => $faker->numberBetween(1, 2),
@@ -90,7 +91,7 @@ class ProgrammeTest extends TestCase
 
 
             Programme::factory()->create([
-                'user_id' => $faker->numberBetween(1, 20),
+                'user_id' => 1,
                 'type_id' => $faker->numberBetween(1, 2),
                 'title' => ucwords($faker->words(2, true)),
                 'room_id' => $faker->numberBetween(1, 20),
